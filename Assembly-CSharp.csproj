@@ -48,6 +48,7 @@
   <ItemGroup>
      <Compile Include="Assets\BackgroundManager.cs" />
      <Compile Include="Assets\CameraControl.cs" />
+     <Compile Include="Assets\RendererExtensions.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
  </Reference>
