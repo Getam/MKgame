@@ -1,29 +1,28 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 public class BackgroundManager : MonoBehaviour
 {
-		private List<Transform> backgroundPart;
+		private List<Transform> bgListHorizontal;
+		private List<Transform> bgListVertical;
 
 		void Start ()
 		{
-				backgroundPart = new List<Transform> ();
+				bgListHorizontal = new List<Transform> ();
 			
 				for (int i = 0; i < transform.childCount; i++) {
 						Transform child = transform.GetChild (i);
 				
 						// Add only the visible children
 						if (child.renderer != null) {
-								backgroundPart.Add (child);
+								bgListHorizontal.Add (child);
 						}
 				}
 			
-				// Sort by position.
-				// Note: Get the children from left to right.
-				// We would need to add a few conditions to handle
-				// all the possible scrolling directions.
-				backgroundPart = backgroundPart.OrderBy (t => t.position.x).ToList ();
+				bgListHorizontal = bgListHorizontal.OrderBy (t => t.position.x).ToList ();
+				bgListVertical = bgListHorizontal.OrderBy (t => t.position.y).ToList ();
 		}
 	
 		void Update ()
@@ -31,34 +30,64 @@ public class BackgroundManager : MonoBehaviour
 
 				// Get the first object.
 				// The list is ordered from left (x position) to right.
-				Transform firstChild = backgroundPart.FirstOrDefault ();
-			
-				if (firstChild != null) {
-						// Check if the child is already (partly) before the camera.
-						// We test the position first because the IsVisibleFrom
-						// method is a bit heavier to execute.
-						if (firstChild.position.x < Camera.main.transform.position.x) {
-								// If the child is already on the left of the camera,
-								// we test if it's completely outside and needs to be
-								// recycled.
-								if (firstChild.renderer.IsVisibleFrom (Camera.main) == false) {
-										// Get the last child position.
-										Transform lastChild = backgroundPart.LastOrDefault ();
-										Vector3 lastPosition = lastChild.transform.position;
-										Vector3 lastSize = (lastChild.renderer.bounds.max - lastChild.renderer.bounds.min);
-						
-										// Set the position of the recyled one to be AFTER
-										// the last child.
-										// Note: Only work for horizontal scrolling currently.
-										firstChild.position = new Vector3 (lastPosition.x + lastSize.x, firstChild.position.y, firstChild.position.z);
-						
-										// Set the recycled child to the last position
-										// of the backgroundPart list.
-										backgroundPart.Remove (firstChild);
-										backgroundPart.Add (firstChild);
-								}
-						}
+				Transform HChild1 = bgListHorizontal.FirstOrDefault ();
+				Transform HChildLast = bgListHorizontal.LastOrDefault ();
+				Transform VChild1 = bgListVertical.FirstOrDefault ();
+				Transform VChildLast = bgListVertical.LastOrDefault ();
+				Vector3 lastSize = (HChildLast.renderer.bounds.max - HChildLast.renderer.bounds.min);
+
+				if (HChildLast.position.x + lastSize.x / 6 < Camera.main.transform.position.x) {
+						Transform HChild2 = bgListHorizontal [1];
+						Vector3 lastPosition = HChildLast.transform.position;
+
+						HChild1.position = new Vector3 (lastPosition.x + lastSize.x, HChild1.position.y, HChild1.position.z);
+						HChild2.position = new Vector3 (lastPosition.x + lastSize.x, HChild2.position.y, HChild1.position.z);
+
+						bgListHorizontal.Remove (HChild1);
+						bgListHorizontal.Remove (HChild2);
+						bgListHorizontal.Add (HChild1);
+						bgListHorizontal.Add (HChild2);
+				} else if (HChild1.position.x - lastSize.x / 6 > Camera.main.transform.position.x) {
+						Transform HChild2 = bgListHorizontal [1];
+						Vector3 lastPosition = HChildLast.transform.position;
+				
+						HChild1.position = new Vector3 (lastPosition.x - lastSize.x, HChild1.position.y, HChild1.position.z);
+						HChild2.position = new Vector3 (lastPosition.x - lastSize.x, HChild2.position.y, HChild1.position.z);
+				
+						bgListHorizontal.Remove (HChild1);
+						bgListHorizontal.Remove (HChild2);
+						bgListHorizontal.Add (HChild1);
+						bgListHorizontal.Add (HChild2);
+
 				}
+
+				if (VChildLast.position.y + lastSize.y / 6 < Camera.main.transform.position.y) {
+						Transform VChild2 = bgListVertical [1];
+						Vector3 lastPosition = VChildLast.transform.position;
+			
+						VChild1.position = new Vector3 (VChild1.position.x, lastPosition.y + lastSize.y, VChild1.position.z);
+						VChild2.position = new Vector3 (VChild2.position.x, lastPosition.y + lastSize.y, VChild1.position.z);
+
+						bgListVertical.Remove (VChild1);
+						bgListVertical.Remove (VChild2);
+						bgListVertical.Add (VChild1);
+						bgListVertical.Add (VChild2);
+
+				} else if (VChild1.position.y - lastSize.y / 6 > Camera.main.transform.position.y) {
+						Transform VChild2 = bgListVertical [1];
+						Vector3 lastPosition = VChildLast.transform.position;
+
+						VChild1.position = new Vector3 (VChild1.position.x, lastPosition.y - lastSize.y, VChild1.position.z);
+						VChild2.position = new Vector3 (VChild2.position.x, lastPosition.y - lastSize.y, VChild1.position.z);
+
+						bgListVertical.Remove (VChild1);
+						bgListVertical.Remove (VChild2);
+						bgListVertical.Add (VChild1);
+						bgListVertical.Add (VChild2);
+			
+				}
+
+				
 		}
 }
 

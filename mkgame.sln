@@ -1,7 +1,7 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2008
 
-Project("{50B13DD7-0F65-CD3E-EF5A-30CCA009F069}") = "MKgame", "Assembly-CSharp.csproj", "{D9CD43F8-04B2-D88D-A880-000EA844F2ED}"
+Project("{8D0EE6C1-A139-E96A-A87B-7E7C66109B7F}") = "mkgame", "Assembly-CSharp.csproj", "{8E7D4A32-D9B4-FEB3-8763-B34FE5CBEF6D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,15 +9,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D9CD43F8-04B2-D88D-A880-000EA844F2ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D9CD43F8-04B2-D88D-A880-000EA844F2ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D9CD43F8-04B2-D88D-A880-000EA844F2ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D9CD43F8-04B2-D88D-A880-000EA844F2ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E7D4A32-D9B4-FEB3-8763-B34FE5CBEF6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E7D4A32-D9B4-FEB3-8763-B34FE5CBEF6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E7D4A32-D9B4-FEB3-8763-B34FE5CBEF6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E7D4A32-D9B4-FEB3-8763-B34FE5CBEF6D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-										GlobalSection(MonoDevelopProperties) = preSolution
+													GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1
