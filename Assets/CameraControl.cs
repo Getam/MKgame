@@ -4,7 +4,6 @@ using System.Collections.Generic;
 public class CameraControl : MonoBehaviour {
 	public float scrollSpeed = 20;
 	public float scrollArea = 50;
-	public float dragSpeed = 1;
 	// Use this for initialization
 	void Start () {
 	
@@ -12,6 +11,7 @@ public class CameraControl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		float dragSpeed = (Camera.main.orthographicSize/5);
 		var mPosX = Input.mousePosition.x; var mPosY = Input.mousePosition.y;
 		
 		// Do camera movement by mouse position 
@@ -26,6 +26,16 @@ public class CameraControl : MonoBehaviour {
 		} 
 		if (mPosY >= Screen.height-scrollArea) {
 			transform.Translate(Vector3.up *scrollSpeed*Time.deltaTime);
+		}
+
+		if (Input.GetAxis("Mouse ScrollWheel") > 0) // forward
+		{ 
+			Camera.main.orthographicSize = Mathf.Max(Camera.main.orthographicSize-1, 5);
+		}
+
+		else if (Input.GetAxis("Mouse ScrollWheel") < 0) // back
+		{
+			Camera.main.orthographicSize = Mathf.Min(Camera.main.orthographicSize+1, 15);
 		}
 		
 		// Do camera movement by keyboard 

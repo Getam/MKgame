@@ -5,6 +5,7 @@ using System;
 
 public class BackgroundManager : MonoBehaviour
 {
+		public float camMoveBgOffset = 6;
 		private List<Transform> bgListHorizontal;
 		private List<Transform> bgListVertical;
 
@@ -35,8 +36,10 @@ public class BackgroundManager : MonoBehaviour
 				Transform VChild1 = bgListVertical.FirstOrDefault ();
 				Transform VChildLast = bgListVertical.LastOrDefault ();
 				Vector3 lastSize = (HChildLast.renderer.bounds.max - HChildLast.renderer.bounds.min);
+				float camSize = Camera.main.orthographicSize;
+				
 
-				if (HChildLast.position.x + lastSize.x / 6 < Camera.main.transform.position.x) {
+				if (HChildLast.position.x + lastSize.x / (camMoveBgOffset * camSize / 5) < Camera.main.transform.position.x) {
 						Transform HChild2 = bgListHorizontal [1];
 						Vector3 lastPosition = HChildLast.transform.position;
 
@@ -47,7 +50,7 @@ public class BackgroundManager : MonoBehaviour
 						bgListHorizontal.Remove (HChild2);
 						bgListHorizontal.Add (HChild1);
 						bgListHorizontal.Add (HChild2);
-				} else if (HChild1.position.x - lastSize.x / 6 > Camera.main.transform.position.x) {
+				} else if (HChild1.position.x - lastSize.x / (camMoveBgOffset * camSize / 5) > Camera.main.transform.position.x) {
 						Transform HChild2 = bgListHorizontal [1];
 						Vector3 lastPosition = HChildLast.transform.position;
 				
@@ -61,7 +64,7 @@ public class BackgroundManager : MonoBehaviour
 
 				}
 
-				if (VChildLast.position.y + lastSize.y / 6 < Camera.main.transform.position.y) {
+				if (VChildLast.position.y + lastSize.y / (camMoveBgOffset * camSize / 5) < Camera.main.transform.position.y) {
 						Transform VChild2 = bgListVertical [1];
 						Vector3 lastPosition = VChildLast.transform.position;
 			
@@ -73,7 +76,7 @@ public class BackgroundManager : MonoBehaviour
 						bgListVertical.Add (VChild1);
 						bgListVertical.Add (VChild2);
 
-				} else if (VChild1.position.y - lastSize.y / 6 > Camera.main.transform.position.y) {
+				} else if (VChild1.position.y - lastSize.y / (camMoveBgOffset * camSize / 5) > Camera.main.transform.position.y) {
 						Transform VChild2 = bgListVertical [1];
 						Vector3 lastPosition = VChildLast.transform.position;
 
